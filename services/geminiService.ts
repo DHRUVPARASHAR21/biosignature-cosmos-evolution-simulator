@@ -2,7 +2,13 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import type { EvolutionChange } from '../types';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+// Initialize the Gemini API with the key from environment variables
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+if (!API_KEY) {
+  throw new Error('VITE_GEMINI_API_KEY is not defined in environment variables');
+}
+
+const genAI = new GoogleGenerativeAI(API_KEY);
 
 export const getEvolutionExplanation = async (
   originalSequence: string,

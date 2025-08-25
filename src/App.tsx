@@ -236,7 +236,9 @@ TACGTACGTACGTACGTAGCTAGCT"
                         )}
                     </div>
                 </div>
-                 <EvolutionaryInsight />
+                 {!isLoading && (
+                    <EvolutionaryInsight explanation={explanation} />
+                )}
             </>
         )}
       </div>
