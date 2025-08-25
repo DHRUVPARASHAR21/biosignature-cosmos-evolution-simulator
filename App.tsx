@@ -3,12 +3,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { environments } from './constants';
 import { parseFasta } from './utils/fastaParser';
 import { simulateEvolution } from './utils/evolutionSimulator';
-import { getEvolutionExplanation } from './services/geminiService';
 import type { EvolutionChange, EnvironmentName } from './types';
 import VisualSpecimen from './components/VisualSpecimen';
 import MarkdownRenderer from './components/MarkdownRenderer';
 import LoadingSpinner from './components/LoadingSpinner';
-import EvolutionaryInsight from './components/EvolutionaryInsight';
 
 const App: React.FC = () => {
   const [fastaInput, setFastaInput] = useState<string>('');
@@ -19,7 +17,6 @@ const App: React.FC = () => {
   const [selectedEnvironment, setSelectedEnvironment] = useState<EnvironmentName>('Mars');
   const [simulationYears, setSimulationYears] = useState<number>(1000000);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [explanation, setExplanation] = useState<string>('');
   const [error, setError] = useState<string>('');
 
   const handleFastaUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +51,6 @@ const App: React.FC = () => {
     }
     setIsLoading(true);
     setError('');
-    setExplanation('');
     setEvolvedSequence('');
     setEvolutionChanges([]);
 
@@ -65,15 +61,6 @@ const App: React.FC = () => {
     );
     setEvolvedSequence(newEvolvedSequence);
     setEvolutionChanges(newChanges);
-
-    const explanationText = await getEvolutionExplanation(
-      originalSequence,
-      newEvolvedSequence,
-      newChanges,
-      selectedEnvironment,
-      simulationYears
-    );
-    setExplanation(explanationText);
     setIsLoading(false);
   }, [originalSequence, selectedEnvironment, simulationYears]);
 
@@ -236,7 +223,6 @@ TACGTACGTACGTACGTAGCTAGCT"
                         )}
                     </div>
                 </div>
-                 <EvolutionaryInsight />
             </>
         )}
       </div>
