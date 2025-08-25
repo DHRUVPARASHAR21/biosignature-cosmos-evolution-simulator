@@ -1,8 +1,8 @@
 
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import type { EvolutionChange } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 export const getEvolutionExplanation = async (
   originalSequence: string,
@@ -62,11 +62,10 @@ export const getEvolutionExplanation = async (
   Provide a short, 2-liner layman's pointer at the very end of your explanation, after a horizontal rule.`;
 
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
-    });
-    return response.text;
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text();
   } catch (error) {
     console.error("Error calling Gemini API:", error);
     return "Failed to get a detailed explanation due to an API error. Please check the console for details.";
