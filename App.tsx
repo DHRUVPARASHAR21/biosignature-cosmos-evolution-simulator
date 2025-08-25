@@ -8,6 +8,7 @@ import type { EvolutionChange, EnvironmentName } from './types';
 import VisualSpecimen from './components/VisualSpecimen';
 import MarkdownRenderer from './components/MarkdownRenderer';
 import LoadingSpinner from './components/LoadingSpinner';
+import EvolutionaryInsight from './components/EvolutionaryInsight';
 
 const App: React.FC = () => {
   const [fastaInput, setFastaInput] = useState<string>('');
@@ -235,13 +236,8 @@ TACGTACGTACGTACGTAGCTAGCT"
                         )}
                     </div>
                 </div>
-                 {explanation && !isLoading && (
-                    <div className="mt-12 bg-gray-700 p-6 rounded-lg shadow-lg border border-indigo-600">
-                        <h3 className="text-2xl font-bold mb-4 text-purple-400">Evolutionary Insight</h3>
-                        <div className="prose prose-invert text-gray-200">
-                            <MarkdownRenderer text={explanation} />
-                        </div>
-                    </div>
+                 {!isLoading && (
+                    <EvolutionaryInsight explanation={explanation} />
                 )}
             </>
         )}
