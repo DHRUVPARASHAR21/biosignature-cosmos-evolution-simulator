@@ -7,6 +7,7 @@ A React-based application that simulates the evolution of biological signatures 
 - Support for multiple planetary environments
 - Real-time simulation adjustments
 - Interactive specimen visualization
+- AI-Powered Evolutionary Insights using Google Gemini API
 
 ## Technologies
 - React
